@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>654</width>
-    <height>441</height>
+    <width>788</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,8 +29,8 @@
     <rect>
      <x>10</x>
      <y>30</y>
-     <width>411</width>
-     <height>301</height>
+     <width>531</width>
+     <height>321</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -44,8 +44,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>411</width>
-      <height>301</height>
+      <width>531</width>
+      <height>321</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="layout_image"/>
@@ -55,7 +55,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>340</y>
+     <y>370</y>
      <width>320</width>
      <height>41</height>
     </rect>
@@ -64,28 +64,28 @@
     <item>
      <widget class="QPushButton" name="button_load_image">
       <property name="text">
-       <string>load image</string>
+       <string/>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="button_start">
       <property name="text">
-       <string>start</string>
+       <string/>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="button_stop">
       <property name="text">
-       <string>stop</string>
+       <string/>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="button_new">
       <property name="text">
-       <string>new</string>
+       <string/>
       </property>
      </widget>
     </item>
@@ -94,7 +94,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>560</x>
      <y>40</y>
      <width>160</width>
      <height>278</height>
@@ -190,29 +190,29 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>340</y>
+     <x>560</x>
+     <y>330</y>
      <width>160</width>
      <height>80</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="3">
-     <widget class="QLabel" name="label_13">
+     <widget class="QLabel" name="label_g_max">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
     <item row="1" column="2">
-     <widget class="QLabel" name="label_9">
+     <widget class="QLabel" name="label_r_min">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
     <item row="3" column="3">
-     <widget class="QLabel" name="label_14">
+     <widget class="QLabel" name="label_b_max">
       <property name="text">
        <string/>
       </property>
@@ -226,7 +226,7 @@
      </widget>
     </item>
     <item row="2" column="2">
-     <widget class="QLabel" name="label_10">
+     <widget class="QLabel" name="label_g_min">
       <property name="text">
        <string/>
       </property>
@@ -247,7 +247,7 @@
      </widget>
     </item>
     <item row="1" column="3">
-     <widget class="QLabel" name="label_12">
+     <widget class="QLabel" name="label_r_max">
       <property name="text">
        <string/>
       </property>
@@ -267,7 +267,105 @@
       </property>
      </widget>
     </item>
+    <item row="3" column="2">
+     <widget class="QLabel" name="label_b_min">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="state_process">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>370</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_hue_min">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>60</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_hue_max">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>100</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_sat_min">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>150</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_sat_max">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>200</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_val_min">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>250</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_val_max">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>300</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -1,12 +1,31 @@
 from PySide2 import QtWidgets, QtGui, QtCore
 import numpy as np
+import colorsys
 import cv2 
+
+COLOR_START_PROCESS = """
+            background: #2BF23F;
+            max-height: 40px;
+            max-width: 40px;
+            border-radius: 20px;
+        """
+
+COLOR_STOP_PROCESS = """
+            background: #E64C4C;
+            max-height: 40px;
+            max-width: 40px;
+            border-radius: 20px;
+        """
 
 class Events():
     def __init__(self, window):
         self.window = window
         self.scala_image = 50
         self.init_values_slider()
+        self.init_values_labels()
+
+        self.clicked_load_button = False
+        self.clicked_init_process = False
 
     def get_path_image(self):
         path_image = QtWidgets.QFileDialog.getOpenFileName(
@@ -27,6 +46,8 @@ class Events():
 
             scene_image = self.image_to_scene(self.image)
             self.window.layout_image.addWidget(scene_image)
+
+            self.clicked_load_button = True
             
         except ValueError as ve:
             print(ve)
@@ -69,14 +90,32 @@ class Events():
 
 
     def init_dection(self):
-        self.timer = QtCore.QTimer()
-        self.timer.setInterval(50)
-        self.timer.timeout.connect(self.get_frame)
-        self.timer.start()
+        if self.clicked_load_button:
+            self.timer = QtCore.QTimer()
+            self.timer.setInterval(50)
+            self.timer.timeout.connect(self.get_frame)
+            self.timer.start()
+
+            self.scene_image_thresh = QtWidgets.QGraphicsView()
+            scene = QtWidgets.QGraphicsScene()
+            self.image_pixmap = QtGui.QPixmap(*self.dimensions_image)
+            self.image_pixmap_item = scene.addPixmap(self.image_pixmap)
+            self.scene_image_thresh.setScene(scene)
+
+            self.clear_layout_image()
+            self.window.layout_image.addWidget(self.scene_image_thresh)
+
+            self.clicked_init_process = True
+            self.window.state_process.setStyleSheet(COLOR_START_PROCESS)
 
 
     def get_frame(self):
         self.get_values_sliders()
+
+        frame = self.image_resize(self.image_thresh)
+        image = QtGui.QImage(frame, *self.dimensions_image,QtGui.QImage.Format_RGB888).rgbSwapped()
+        self.image_pixmap = QtGui.QPixmap.fromImage(image)
+        self.image_pixmap_item.setPixmap(self.image_pixmap)
 
 
     def init_values_slider(self):
@@ -96,23 +135,75 @@ class Events():
         self.window.slider_value_max.setValue(255)        
 
     def get_values_sliders(self):
-        hue_min = self.window.slider_hue_min.value()
-        hue_max = self.window.slider_hue_max.value()
-        sat_min = self.window.slider_sat_min.value()
-        sat_max = self.window.slider_sat_max.value()
-        value_min = self.window.slider_value_min.value()
-        value_max = self.window.slider_value_max.value()
+        self.hue_min = self.window.slider_hue_min.value()
+        self.hue_max = self.window.slider_hue_max.value()
+        self.sat_min = self.window.slider_sat_min.value()
+        self.sat_max = self.window.slider_sat_max.value()
+        self.value_min = self.window.slider_value_min.value()
+        self.value_max = self.window.slider_value_max.value()
 
-        print("hue min: %i, hue_max: %i" % (hue_min, hue_max))
-
-        lower = np.array([hue_min, sat_min, value_min])
-        upper = np.array([hue_max, sat_max, value_max])
+        #print("hue min: %i, self.hue_max: %i" % (self.hue_min, self.hue_max))
+        lower = np.array([self.hue_min, self.sat_min, self.value_min])
+        upper = np.array([self.hue_max, self.sat_max, self.value_max])
 
         mask = cv2.inRange(self.img_hsv, lower, upper)
 
-        image_thresh = cv2.bitwise_and(self.image, self.image, mask=mask)
+        self.image_thresh = cv2.bitwise_and(self.image, self.image, mask=mask)
 
-        cv2.imshow('image_thresh', image_thresh)
+        self.set_text_labels()
+
+    def init_values_labels(self):
+        self.window.label_hue_min.setText(str(0))
+        self.window.label_hue_max.setText(str(179))
+        self.window.label_sat_min.setText(str(0))
+        self.window.label_sat_max.setText(str(255))
+        self.window.label_val_min.setText(str(0))
+        self.window.label_val_max.setText(str(255))
+
+        self.window.label_r_min.setText(str(0))
+        self.window.label_g_min.setText(str(0))
+        self.window.label_b_min.setText(str(0))
+
+        self.window.label_r_max.setText(str(0))
+        self.window.label_g_max.setText(str(0))
+        self.window.label_b_max.setText(str(0))
+
+
+    def set_text_labels(self):
+        self.window.label_hue_min.setText(str(self.hue_min))
+        self.window.label_hue_max.setText(str(self.hue_max))
+        self.window.label_sat_min.setText(str(self.sat_min))
+        self.window.label_sat_max.setText(str(self.sat_max))
+        self.window.label_val_min.setText(str(self.value_min))
+        self.window.label_val_max.setText(str(self.value_max))
+
+        r, g, b = colorsys.hsv_to_rgb(self.hue_min / 179, self.sat_min / 255, self.value_min /255 )
+        self.window.label_r_min.setText(str(int(r*255)))
+        self.window.label_g_min.setText(str(int(g*255)))
+        self.window.label_b_min.setText(str(int(b*255)))
+
+        r, g, b = colorsys.hsv_to_rgb(self.hue_max / 179, self.sat_max / 255, self.value_max /255 )
+        self.window.label_r_max.setText(str(int(r*255)))
+        self.window.label_g_max.setText(str(int(g*255)))
+        self.window.label_b_max.setText(str(int(b*255)))
+
 
     def stop_dection(self):
-        self.timer.stop()
+        if self.clicked_init_process:
+            self.timer.stop()
+            self.window.state_process.setStyleSheet(COLOR_STOP_PROCESS)
+
+
+    def new_process(self):
+        self.clicked_load_button = False
+        self.clicked_init_process = False
+        self.clear_layout_image()
+
+    def clear_layout_image(self):
+        for index in reversed(range(self.window.layout_image.count())):
+            layoutItem = self.window.layout_image.itemAt(index)
+            widgetToRemove = layoutItem.widget()
+            print("found widget: " + str(widgetToRemove))
+            widgetToRemove.setParent(None)
+            self.window.layout_image.removeWidget(widgetToRemove)    
+        

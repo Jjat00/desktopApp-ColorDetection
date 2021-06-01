@@ -12,3 +12,4 @@ class MainController():
         self.window.button_load_image.clicked.connect(self.events.load_image)
         self.window.button_start.clicked.connect(self.events.init_dection)
         self.window.button_stop.clicked.connect(self.events.stop_dection)
+        self.window.button_new.clicked.connect(self.events.new_process)

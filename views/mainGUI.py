@@ -1,4 +1,5 @@
 from PySide2 import QtWidgets, QtCore, QtUiTools
+from views.styles import StylesMainWindow
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -6,10 +7,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.load_form()
         self.initUI()
+        StylesMainWindow(self)
 
     def initUI(self):
         self.setWindowTitle("Color Dection")
-        self.setGeometry(300, 100, 654, 441)
+        self.setGeometry(300, 100, 788, 442)
 
 
     def load_form(self):
