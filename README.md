@@ -12,6 +12,16 @@ PySide2==5.15.2
 shiboken2==5.15.2
 ```
 
+## .ui to .py
+```
+pyside2-uic form.ui -o form.py
+```
+
+## create .exe
+```
+pyinstaller --hidden-import PySide2.QtXml app.py
+```
+ 
 ## RUN app
 ```
 py app.py

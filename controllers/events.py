@@ -29,7 +29,7 @@ class Events():
 
     def get_path_image(self):
         path_image = QtWidgets.QFileDialog.getOpenFileName(
-            self.window, "Select Image", dir="./", filter="Images (*.png *.jpg)"
+            self.window.frame_image, "Select Image", dir="./", filter="Images (*.png *.jpg)"
         )
         path_image, _ = path_image
         return path_image

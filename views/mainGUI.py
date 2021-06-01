@@ -1,11 +1,14 @@
 from PySide2 import QtWidgets, QtCore, QtUiTools
 from views.styles import StylesMainWindow
+from views.form import Ui_Form
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
 
-        self.load_form()
+        self.window = Ui_Form()
+        self.window.setupUi(self)
+        #self.load_form()
         self.initUI()
         StylesMainWindow(self)
 
