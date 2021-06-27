@@ -1,5 +1,10 @@
 # App Color Dection
 
+<div>
+    <img src="resources/gui00JPG.JPG" width="411" />
+    <img src="resources/gui01.JPG" width="411"/>
+</div>
+
 ## Description
 
 Aplicación de escritorio para segmentar colores
